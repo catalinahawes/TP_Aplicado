@@ -7,3 +7,10 @@ Created on Thu Jun  4 14:18:50 2026
 """
 
 #CODIGO PRINCIPAL
+
+ruta= 
+
+import os 
+import pandas as pd
+
+os.chdir = 
