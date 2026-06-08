@@ -8,15 +8,12 @@ Created on Thu Jun  4 14:18:50 2026
 
 #CODIGO PRINCIPAL
 import os 
+import pandas as pd
 
 ruta= 'C:\\Users\\Sofia\\OneDrive\\Documentos\\GitHub\\TP_Aplicado\\Datos\\'
-
 os.chdir(ruta)
 print(os.getcwd())
-
 nombre= 'informacion_usuarios_argentina_unicos.csv'
-
-import pandas as pd
 
 print("Opciones: 1. Mostrar general, 2. Mostrar info con filtros, 3. Agregar reporte, 4. Mostrar estadisticas, 5. Modificar estado del caso, 6. Mostrar casos ya resueltos")
 
