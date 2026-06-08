@@ -7,27 +7,27 @@ Created on Thu Jun  4 14:18:50 2026
 """
 
 #CODIGO PRINCIPAL
-
-ruta= 
-
 import os 
 import pandas as pd
 
-os.chdir = 
+ruta= 'C:\\Users\\Sofia\\OneDrive\\Documentos\\GitHub\\TP_Aplicado\\Datos\\'
+os.chdir(ruta)
+print(os.getcwd())
+archivo= 'informacion_usuarios_argentina_unicos.csv'
 
-print("Opciones: 1. Mostrar general, ...")
+print("Opciones: 1. Mostrar general, 2. Mostrar info con filtros, 3. Agregar reporte, 4. Mostrar estadisticas, 5. Modificar estado del caso, 6. Mostrar casos ya resueltos")
 
 opcion= int(input("Elegi una opcion: "))
 
 while opcion != 7:
     if opcion == 1:
-        general= #...
+        general= mostrar_general(ruta)
     
     elif opcion == 2:
         particular= #...
      
     elif opcion == 3:
-        caso_nuevo= #...
+        caso_nuevo= agregar_caso()
         
     elif opcion == 4:
         estadisticas= #...
