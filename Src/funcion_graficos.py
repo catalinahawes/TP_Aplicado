@@ -1,7 +1,20 @@
 import matplotlib.pyplot as plt
 
 def grafico_barras_zona(df):
-    """Gráfico de barras por zona (como en la clase)"""
+    '''
+    Genera un gráfico de barras con la cantidad de casos por zona.
+    
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        DataFrame que contiene los datos de los casos, 
+        debe incluir la columna 'Zona (Argentina)'.
+
+    Returns
+    -------
+    None
+        Muestra el gráfico en pantalla.
+    '''
     
     zonas = df['Zona (Argentina)'].tolist()
     
@@ -23,7 +36,20 @@ def grafico_barras_zona(df):
 
 
 def grafico_torta_genero(df):
-    """Gráfico de torta por género"""
+    '''
+    Genera un gráfico de torta con el porcentaje de casos por género.
+    
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        DataFrame que contiene los datos de los casos, 
+        debe incluir la columna 'Género'.
+
+    Returns
+    -------
+    None
+        Muestra el gráfico en pantalla.
+    '''
     
     generos = df['Género'].tolist()
     
@@ -43,7 +69,20 @@ def grafico_torta_genero(df):
 
 
 def grafico_histograma_edad(df):
-    """Histograma simple de edades"""
+    '''
+    Genera un histograma con la distribución de edades de los casos.
+    
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        DataFrame que contiene los datos de los casos, 
+        debe incluir la columna 'Edad'.
+
+    Returns
+    -------
+    None
+        Muestra el gráfico en pantalla.
+    '''
     
     edades = df['Edad'].tolist()
     
@@ -57,6 +96,19 @@ def grafico_histograma_edad(df):
 
 
 def menu_graficos(df):
+    '''
+    Muestra un menú interactivo para seleccionar y visualizar gráficos.
+    
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        DataFrame con los datos de los casos. (genero,edad,zonas,etc)
+
+    Returns
+    -------
+    None
+        Ejecuta los gráficos según la opción elegida por el usuario.
+    '''
     while True:
         print("Seleccione el grafico que desee ver:")
         print("1. Barras por zona")
