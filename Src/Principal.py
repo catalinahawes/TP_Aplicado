@@ -16,6 +16,7 @@ import modificar_caso_resuelto
 import agregar_caso
 import funcion_graficos
 import mostrar_resueltos
+import filtrar_por_desaparecido_especifico
 
 #ARCHIVO CON INFO
 ruta= 'C:\\Users\\Sofia\\OneDrive\\Documentos\\GitHub\\TP_Aplicado\\Datos\\'
@@ -47,7 +48,7 @@ while opcion != 7:
         general= Funcion_general.mostrar_general(df)
     
     elif opcion == 2:
-        particular= 
+        particular= filtrar_por_desaparecido_especifico.filtrar_participante(df)
      
     elif opcion == 3:
         caso_nuevo= agregar_caso.agregar_caso(df)
@@ -59,7 +60,7 @@ while opcion != 7:
         resuelto= modificar_caso_resuelto.modificar_archivo_caso(df, df_2)
     
     elif opcion == 6:
-        casos-resueltos= mostrar_resueltos.mostrar_casos_resueltos(df_2)
+        casos_resueltos= mostrar_resueltos.mostrar_casos_resueltos(df_2)
         
     
     opcion= int(input("Elegi una opcion: "))
