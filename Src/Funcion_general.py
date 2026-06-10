@@ -5,8 +5,7 @@ Created on Mon Jun  8 13:11:07 2026
 
 @author: catalinahawes
 """
-
-from TP_Aplicado.Principal import ruta 
+import pandas as pd
 
 def mostrar_general(archivo):
     '''
