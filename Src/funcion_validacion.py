@@ -84,7 +84,7 @@ def validar_entero_positivo(dato,nombre_campo):
     if dato<= 0:
         raise ValueError(f"El campo {nombre_campo} debe ser mayor a cero ")
     return dato
-def valida_decimal_positivo(dato,nombre_campo):
+def validar_decimal_positivo(dato,nombre_campo):
     """
     Valida que un dato sea un número decimal mayor a 0.
 
