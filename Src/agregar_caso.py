@@ -38,39 +38,31 @@ def agregar_caso():
 
     Returns:
         None
-
-    Ejemplo de uso:
-        >>> agregar_caso()
-        --- AGREGAR NUEVO CASO ---
-        Nombre y Apellido: Juan Pérez
-        ...
-        ✅ Caso de 'Juan Pérez' agregado correctamente.
     """
     print("\n--- AGREGAR NUEVO CASO ---\n")
 
-    # ── Nombre y Apellido ──────────────────────────────────────────────────────
     while True:
         nombre = input("Nombre y Apellido: ").strip()
         if nombre:
             break
         print("  ⚠ El nombre no puede estar vacío.")
 
-    # ── Edad ───────────────────────────────────────────────────────────────────
+
     while True:
         edad_input = input("Edad: ").strip()
         if edad_input.isdigit() and 0 <= int(edad_input) < 111:
             edad = int(edad_input)
             break
-        print("  ⚠ Ingresá una edad válida (número entre 0 y 111).")
+        print("  ⚠ Ingresá una edad válida (número entre 0 y 110).")
 
-    # ── Género ─────────────────────────────────────────────────────────────────
+
     while True:
         genero = input("Género (Masculino / Femenino / Otro): ").strip().capitalize()
         if genero in ["Masculino", "Femenino", "Otro"]:
             break
         print("  ⚠ Ingresá una de las opciones: Masculino, Femenino u Otro.")
 
-    # ── Peso ───────────────────────────────────────────────────────────────────
+
     while True:
         try:
             peso = float(input("Peso (kg): ").strip())
@@ -80,7 +72,7 @@ def agregar_caso():
         except ValueError:
             print("  ⚠ Ingresá un número (por ejemplo: 65.5).")
 
-    # ── Altura ─────────────────────────────────────────────────────────────────
+  
     while True:
         try:
             altura = float(input("Altura (m): ").strip())
@@ -90,7 +82,7 @@ def agregar_caso():
         except ValueError:
             print("  ⚠ Ingresá un número (por ejemplo: 1.70).")
 
-    # ── Rasgos Físicos ─────────────────────────────────────────────────────────
+
     print("Rasgos Físicos (color de pelo, color de ojos, color de tez):")
     while True:
         rasgos = input("  → ").strip()
@@ -98,17 +90,17 @@ def agregar_caso():
             break
         print("  ⚠ Este campo no puede estar vacío.")
 
-    # ── Zona ───────────────────────────────────────────────────────────────────
+
     while True:
         zona = input("Zona (Argentina): ").strip()
         if zona:
             break
-        print("  ⚠ Este campo no puede estar vacío.")
+        print("Este campo no puede estar vacío.")
 
-    # ── Datos Extra ────────────────────────────────────────────────────────────
+
     datos_extra = input("Datos Extra (ropa, tatuajes, etc. — podés dejarlo vacío): ").strip()
 
-    # ── Armar el nuevo registro ────────────────────────────────────────────────
+
     nuevo_caso = {
         "Nombre y Apellido": nombre,
         "Edad": edad,
@@ -120,14 +112,13 @@ def agregar_caso():
         "Datos Extra": datos_extra
     }
 
-    # ── Cargar o crear el archivo CSV ──────────────────────────────────────────
+
     if os.path.exists(ARCHIVO):
         df = pd.read_csv(ARCHIVO)
     else:
-        # Si el archivo no existe todavía, lo crea con las columnas correctas
         df = pd.DataFrame(columns=COLUMNAS)
 
-    # ── Agregar la fila nueva y guardar ────────────────────────────────────────
+ 
     nueva_fila = pd.DataFrame([nuevo_caso])
     df = pd.concat([df, nueva_fila], ignore_index=True)
     df.to_csv(ARCHIVO, index=False)
