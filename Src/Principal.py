@@ -44,23 +44,29 @@ print("7. Salir")
 opcion= int(input("Elegi una opcion: "))
 
 while opcion != 7:
-    if opcion == 1:
-        general= Funcion_general.mostrar_general(df)
-    
-    elif opcion == 2:
-        particular= filtrar_por_desaparecido_especifico.filtrar_participante(df)
-     
-    elif opcion == 3:
-        caso_nuevo= agregar_caso.agregar_caso(df)
+    try: 
+        if opcion == 1:
+            general= Funcion_general.mostrar_general(df)
         
-    elif opcion == 4:
-        estadisticas= funcion_graficos.menu_graficos(df)
+        elif opcion == 2:
+            particular= filtrar_por_desaparecido_especifico.filtrar_participante(df)
+         
+        elif opcion == 3:
+            caso_nuevo= agregar_caso.agregar_caso(df)
+            
+        elif opcion == 4:
+            estadisticas= funcion_graficos.menu_graficos(df)
+            
+        elif opcion == 5:
+            resuelto= modificar_caso_resuelto.modificar_archivo_caso(df, df_2)
         
-    elif opcion == 5:
-        resuelto= modificar_caso_resuelto.modificar_archivo_caso(df, df_2)
-    
-    elif opcion == 6:
-        casos_resueltos= mostrar_resueltos.mostrar_casos_resueltos(df_2)
+        elif opcion == 6:
+            casos_resueltos= mostrar_resueltos.mostrar_casos_resueltos(df_2)
         
+    except ValueError as e:
+        print(e)
     
-    opcion= int(input("Elegi una opcion: "))
+    
+    finally:
+        opcion= int(input("Elegi una opcion: "))
+
