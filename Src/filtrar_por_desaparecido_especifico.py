@@ -39,7 +39,5 @@ def mostrar_caso_especifico(df):
         print("No se encontraron registros")
 
 
-# acordarse de ponerlo de PROGRAMA PRINCIPAL
-df = pd.read_csv(ARCHIVO)
-mostrar_caso_especifico(df)
+
 
