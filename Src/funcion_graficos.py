@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-
+from funcion_validacion import validar_entero_positivo
 def grafico_barras_zona(df):
     '''
     Genera un gráfico de barras con la cantidad de casos por zona.
@@ -93,8 +93,6 @@ def grafico_histograma_edad(df):
     plt.ylabel("Cantidad de casos")
     plt.show()
 
-
-
 def menu_graficos(df):
     '''
     Muestra un menú interactivo para seleccionar y visualizar gráficos.
@@ -117,20 +115,27 @@ def menu_graficos(df):
         print("4. Ver los 3 gráficos")
         print("5. Salir")
         
-        opcion = input("Elegí una opción: ")
-        
-        if opcion == "1":
-            grafico_barras_zona(df)
-        elif opcion == "2":
-            grafico_torta_genero(df)
-        elif opcion == "3":
-            grafico_histograma_edad(df)
-        elif opcion == "4":
-            grafico_barras_zona(df)
-            grafico_torta_genero(df)
-            grafico_histograma_edad(df)
-        elif opcion == "5":
-            print("Saliendo del menú de gráficos...")
-            break
-        else:
-            print("Opción inválida. Intentá de nuevo.")
+        try:
+            opcion_str = input("Elegí una opción: ")
+            opcion = validar_entero_positivo(opcion_str, "opción del menú")
+            
+            if opcion == 1:
+                grafico_barras_zona(df)
+            elif opcion == 2:
+                grafico_torta_genero(df)
+            elif opcion == 3:
+                grafico_histograma_edad(df)
+            elif opcion == 4:
+                print("Mostrando los 3 gráficos...")
+                grafico_barras_zona(df)
+                grafico_torta_genero(df)
+                grafico_histograma_edad(df)
+            elif opcion == 5:
+                print("Saliendo del menú de gráficos...")
+                break
+            else:
+                print("Opción inválida. Elegí un número entre 1 y 5.")
+                
+        except ValueError as e:
+            print(f"Error de validación: {e}")
+            print("Por favor, intentá de nuevo con un número del 1 al 5.")
