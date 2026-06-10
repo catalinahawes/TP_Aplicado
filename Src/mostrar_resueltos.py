@@ -5,7 +5,7 @@ Created on Wed Jun 10 15:24:17 2026
 
 @author: catalinahawes
 """
-import pandas as pd
+
 
 def mostrar_casos_resueltos(archivo_2):
     '''
@@ -15,11 +15,11 @@ def mostrar_casos_resueltos(archivo_2):
         archivo_2 (DataFrame): datos cargados desde un CSV.
         
     Errores:
-        EmptyFileError: si el archivo se encuentra vacio
+        ValueError: si el archivo se encuentra vacio
         
     '''
-    if archivo.empty:
-        raise EmptyFileError("[ERROR CRÍTICO] El archivo esta vacio")
+    if archivo_2.empty:
+        raise ValueError("[ERROR CRÍTICO] El archivo esta vacio")
     
     print(archivo_2.head())
     

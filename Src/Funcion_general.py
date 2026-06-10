@@ -5,7 +5,6 @@ Created on Mon Jun  8 13:11:07 2026
 
 @author: catalinahawes
 """
-import pandas as pd
 
 def mostrar_general(archivo):
     '''
@@ -15,11 +14,11 @@ def mostrar_general(archivo):
         archivo (DataFrame): datos cargados desde un CSV.
         
     Errores:
-        EmptyFileError: si el archivo se encuentra vacio
+        ValueError: si el archivo se encuentra vacio
         
     '''
     if archivo.empty:
-        raise EmptyFileError("[ERROR CRÍTICO] El archivo esta vacio")
+        raise ValueError("[ERROR CRÍTICO] El archivo esta vacio")
     
     print(archivo.head())
     
