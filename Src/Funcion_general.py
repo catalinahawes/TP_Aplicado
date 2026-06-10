@@ -6,7 +6,7 @@ Created on Mon Jun  8 13:11:07 2026
 @author: catalinahawes
 """
 
-from ... 
+from Src.Principal import ruta 
 
 def mostrar_general(archivo):
     '''
@@ -21,6 +21,6 @@ def mostrar_general(archivo):
         
     '''
     
+    archivo.head()
     
-    inscripciones_con_estudiantes.head()
     
