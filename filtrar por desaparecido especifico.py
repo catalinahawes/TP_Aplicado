@@ -1,6 +1,7 @@
 import pandas as pd
 
 ARCHIVO = "Datos/informacion_usuarios_argentina_unico.csv"
+from funcion_validacion import validar_nombre_apellido
 
 
 def filtrar_participante(df, nombre_buscado):
@@ -27,8 +28,8 @@ def mostrar_caso_especifico(df):
     Retorno: None
     """
     
-    nombre_buscado = input("Ingrese nombre y apellido: ").strip()
-    
+    nombre_buscado= input("Ingrese nombre y apellido: ").strip()
+    nombre_buscado= validar_nombre_apellido
     resultado = filtrar_participante(df, nombre_buscado)
     
     if len(resultado) > 0:
