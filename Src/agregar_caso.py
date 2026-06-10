@@ -39,8 +39,8 @@ def agregar_caso():
         print(f"Error en los datos ingresados: {e}")
         print("No se guardó el caso. Por favor, volvé a intentarlo.")
         return
-
-   nueva_fila = [nombre, edad, genero, peso, altura, rasgos, zona, datos_extra]
+    
+    nueva_fila = [nombre, edad, genero, peso, altura, rasgos, zona, datos_extra]
 
     if os.path.exists(ARCHIVO):
         df = pd.read_csv(ARCHIVO)
