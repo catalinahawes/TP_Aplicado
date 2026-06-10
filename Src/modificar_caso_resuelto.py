@@ -6,6 +6,10 @@ Created on Wed Jun 10 08:36:08 2026
 """
 
 import pandas as pd
+from funcion_validacion import validar_texto_obligatorio
+from funcion_validacion import validar_nombre_apellido
+from funcion_validacion import validar_entero_positivo
+from funcion_validacion import validar_decimal_positivo
    #fijarme como llamo a esos parametros en el main 
 def modificar_archivo_caso(archivo_activos,archivo_resueltos):
     """
@@ -34,40 +38,23 @@ def modificar_archivo_caso(archivo_activos,archivo_resueltos):
         print("Ingrese los datos del caso que desea marcar como resuelto")
         #ver de poner todo esto en una funcion de validar
         nombre= input("Ingrese nombre y apellido: ")
-        if nombre== "":
-            raise ValueError("El nombre y apellido no puede estar vacio")
-        if nombre != nombre.title():
-            raise ValueError ("El nombre y apellido debe escribirse en mayuscula inicial, Ejemplo: Juan Perez")
+        nombre= validar_nombre_apellido(nombre)
         edad= input("Edad:")    
-        if edad== "":
-            raise ValueError("La edad no puede estar vacia")
-        edad= int(edad)
-        if edad <= 0:
-            raise ValueError("La edad no puede ser negativa")
+        edad= validar_entero_positivo(edad,"edad")
+       
         genero= input("Genero:")
-        if genero == "":
-            raise ValueError("El genero no puede estar vacio")
+        genero= validar_texto_obligatorio(genero,"genero")
         peso= input("Peso en Kg:")
-        if peso == "":
-            raise ValueError("El peso no puede estar vacio")
-        peso= float(peso)
-        if peso <= 0: 
-            raise ValueError("El peso no puede ser negativo")
+        peso= validar_decimal_positivo(peso,"peso")
         altura= input("Ingrese altura")
-        if altura =="":
-            raise ValueError("Los datos no pueden estar vacios")
-        altura= float(altura)
-        if altura<=0:
-            raise ValueError("La altura debe ser mayor a 0")
+        altura= validar_decimal_positivo(altura,"altura")
         rasgos_fisicos= input("Rasgos fisicos:")
-        if rasgos_fisicos == "":
-            raise ValueError("Los rasgos no pueden estar vacios")
+        rasgos_fisicos= validar_texto_obligatorio(rasgos_fisicos, "rasgos fisicos")
         zona= input("Ingrese zona: ")
-        if zona == "":
-                raise ValueError("La zona no puede estar vacía.")
+        zona= validar_texto_obligatorio(zona, "zona")
+        
         datos_extra= input("Datos extra: ")
-        if datos_extra == "":
-            raise ValueError("Los datos no pueden estar vacios")
+        datos_extra = validar_texto_obligatorio(datos_extra, "datos extra")
         
         caso = df[
                 (df["Nombre y Apellido"] == nombre) &
