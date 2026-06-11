@@ -6,10 +6,10 @@ Created on Wed Jun 10 08:36:08 2026
 """
 
 import pandas as pd
-from funcion_validacion import validar_texto_obligatorio
-from funcion_validacion import validar_nombre_apellido
-from funcion_validacion import validar_entero_positivo
-from funcion_validacion import validar_decimal_positivo
+from Src.funcion_validacion import validar_texto_obligatorio
+from Src.funcion_validacion import validar_nombre_apellido
+from Src.funcion_validacion import validar_entero_positivo
+from Src.funcion_validacion import validar_decimal_positivo
    #fijarme como llamo a esos parametros en el main 
 def modificar_archivo_caso(archivo_activos,archivo_resueltos):
     """
