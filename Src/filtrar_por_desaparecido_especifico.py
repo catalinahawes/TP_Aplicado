@@ -28,8 +28,8 @@ def mostrar_caso_especifico(df):
     Retorno: None
     """
     
-    nombre_buscado= input("Ingrese nombre y apellido: ").strip()
-    nombre_buscado= validar_nombre_apellido
+    nombre_buscado = input("Ingrese nombre y apellido: ").strip()
+    nombre_buscado = validar_nombre_apellido(nombre_buscado)
     resultado = filtrar_participante(df, nombre_buscado)
     
     if len(resultado) > 0:
