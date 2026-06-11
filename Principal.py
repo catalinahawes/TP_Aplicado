@@ -19,43 +19,42 @@ import Src.mostrar_resueltos
 import Src.filtrar_por_desaparecido_especifico
 
 #ARCHIVO CON INFO
-ruta= 'Datos\\'
+ruta= 'Datos'
 archivo= 'informacion_usuarios_argentina_unicos.csv'
 
-completo= ruta + archivo
+completo= os.path.join(ruta, archivo)
 
-df = pd.read_csv(os.path.join(ruta, archivo))
 
 #ARCHIVO CASOS RESUELTOS
-ruta_2= "Datos\\"
+
 archivo_casos_resueltos= 'Casos resueltos.csv'
 
-completo_2= ruta_2 + archivo_casos_resueltos
-
-df_2 = pd.read_csv(os.path.join(ruta_2, archivo_casos_resueltos))
+completo_2= os.path.join(ruta, archivo_casos_resueltos)
 
 
 #CODIGO PRINCIPAL
-print("Elija una de las siguientes opciones:")
-print("1. Mostrar general") 
-print("2. Mostrar info con filtros")
-print("3. Agregar reporte")
-print("4. Mostrar estadisticas")
-print("5. Modificar estado del caso")
-print("6. Mostrar casos ya resueltos")
-print("7. Salir")
 
-opcion= int(input("Elegi una opcion: "))
-
-while opcion != 7:
+while True:
+    print("Elija una de las siguientes opciones:")
+    print("1. Mostrar general") 
+    print("2. Mostrar info con filtros")
+    print("3. Agregar reporte")
+    print("4. Mostrar estadisticas")
+    print("5. Modificar estado del caso")
+    print("6. Mostrar casos ya resueltos")
+    print("7. Salir")   
+    
     try: 
+        df = pd.read_csv(completo) if os.path.exists(completo) else pd.DataFrame()
+        df_2 = pd.read_csv(completo_2) if os.path.exists(completo_2) else pd.DataFrame()
+         
+        opcion= int(input("Elegi una opcion: "))
+        
         if opcion == 1:
             general= Src.Funcion_general.mostrar_general(df)
         
         elif opcion == 2:
-            nombre= Src.filtrar_por_desaparecido_especifico.mostrar_caso_especifico(df)    
-             
-            particular= Src.filtrar_por_desaparecido_especifico.filtrar_participante(df, nombre)
+            Src.filtrar_por_desaparecido_especifico.mostrar_caso_especifico(df)
             
         elif opcion == 3:
             caso_nuevo= Src.agregar_caso.agregar_caso(df)
@@ -68,11 +67,16 @@ while opcion != 7:
         
         elif opcion == 6:
             casos_resueltos= Src.mostrar_resueltos.mostrar_casos_resueltos(df_2)
+       
+        elif opcion == 7:
+            print("¡Gracias por usar el sistema!")
+            break
         
+        else:
+            print("Opción inválida. Por favor, elegí un número del 1 al 7.")
+  
     except ValueError as e:
-        print(e)
+        print(f"Error: Por favor, ingresá un número válido. ({e})")
     
-    
-    finally: 
-        opcion= int(input("Elegi una opcion: "))
-
+    except Exception as e:
+        print(f"Ocurrió un error inesperado: {e}")
