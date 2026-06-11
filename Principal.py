@@ -7,85 +7,114 @@ Created on Thu Jun  4 14:18:50 2026
 """
 
 
-import os 
+import os
 import pandas as pd
 
-#IMPORT DE LAS FUNCIONES
-import Src.Funcion_general
-import Src.modificar_caso_resuelto
-import Src.agregar_caso
-import Src.funcion_graficos
-import Src.mostrar_resueltos
-import Src.filtrar_por_desaparecido_especifico
 
-#ARCHIVO CON INFO
-ruta= 'Datos'
-archivo= 'informacion_usuarios_argentina_unicos.csv'
-
-completo= os.path.join(ruta, archivo)
+from Src.Funcion_general import mostrar_general
+from Src.modificar_caso_resuelto import modificar_archivo_caso
+from Src.agregar_caso import agregar_caso
+from Src.funcion_graficos import menu_graficos
+from Src.mostrar_resueltos import mostrar_casos_resueltos
+from Src.filtrar_por_desaparecido_especifico import mostrar_caso_especifico
 
 
-#ARCHIVO CASOS RESUELTOS
+ruta = 'Datos'
+archivo_activos = 'informacion_usuarios_argentina_unicos.xlsx'
+archivo_resueltos = 'Casos resueltos.xlsx'
 
-archivo_casos_resueltos= 'Casos resueltos.csv'
+completo_activos = os.path.join(ruta, archivo_activos)
+completo_resueltos = os.path.join(ruta, archivo_resueltos)
 
-completo_2= os.path.join(ruta, archivo_casos_resueltos)
+
+try:
+    df = pd.read_csv(completo_activos, encoding='latin1')
+except:
+    df = pd.DataFrame()
+
+try:
+    df_resueltos = pd.read_csv(completo_resueltos, encoding='latin1')
+except:
+    df_resueltos = pd.DataFrame()
 
 
-#CODIGO PRINCIPAL
 
-opcion= 'si'
-while opcion == 'si':
-    print("Elija una de las siguientes opciones:")
-    print("1. Mostrar general") 
-    print("2. Mostrar info con filtros")
-    print("3. Agregar reporte")
-    print("4. Mostrar estadisticas")
-    print("5. Modificar estado del caso")
-    print("6. Mostrar casos ya resueltos")
-    print("7. Salir")   
+
+while True:
     
-    try: 
-        opcion= int(input("Elegi una opcion: "))
-        
-        df = pd.read_csv(completo) if os.path.exists(completo) else pd.DataFrame()
-        df_2 = pd.read_csv(completo_2) if os.path.exists(completo_2) else pd.DataFrame()
-         
+    print("Elija una de las siguientes opciones:")
+    print("1. Mostrar general (todos los casos activos)")
+    print("2. Mostrar info con filtros (caso específico)")
+    print("3. Agregar reporte")
+    print("4. Mostrar estadísticas (gráficos)")
+    print("5. Modificar estado del caso (marcar como resuelto)")
+    print("6. Mostrar casos ya resueltos")
+    print("7. Salir")
+    
+    try:
+        opcion = int(input("Elegí una opción (1-7): "))
         
         if opcion == 1:
-            general= Src.Funcion_general.mostrar_general(df)
-            opcion= int(input("Desea seguir?: "))
-        
+            print("Mostrando todos los casos activos")
+            mostrar_general(df)
+            
         elif opcion == 2:
-            Src.filtrar_por_desaparecido_especifico.mostrar_caso_especifico(df)
-            opcion= int(input("Desea seguir?: "))
+            print("Buscar caso específico")
+            mostrar_caso_especifico(df)
             
         elif opcion == 3:
-            caso_nuevo= Src.agregar_caso.agregar_caso(df)
-            opcion= int(input("Desea seguir?: "))
+            print("Agregar nuevo caso")
+            agregar_caso(completo_activos)
+            # Recargamos después de agregar
+            try:
+                df = pd.read_csv(completo_activos, encoding='latin1')
+            except:
+                df = pd.DataFrame()
             
         elif opcion == 4:
-            estadisticas= Src.funcion_graficos.menu_graficos(df)
-            opcion= int(input("Desea seguir?: "))
+            print("Estadísticas y Gráficos")
+            menu_graficos(df)
             
         elif opcion == 5:
-            resuelto= Src.modificar_caso_resuelto.modificar_archivo_caso(completo, completo_2)
-            opcion= int(input("Desea seguir?: "))
-        
+            print("Marcar caso como resuelto")
+            modificar_archivo_caso(completo_activos, completo_resueltos)
+            try:
+                df = pd.read_csv(completo_activos, encoding='latin1')
+            except:
+                df = pd.DataFrame()
+            try:
+                df_resueltos = pd.read_csv(completo_resueltos, encoding='latin1')
+            except:
+                df_resueltos = pd.DataFrame()
+            
         elif opcion == 6:
-            casos_resueltos= Src.mostrar_resueltos.mostrar_casos_resueltos(df_2)
-            opcion= int(input("Desea seguir?: "))
-       
+            print("Mostrando casos ya resueltos")
+            mostrar_casos_resueltos(df_resueltos)
+            
         elif opcion == 7:
-            print("¡Gracias por usar el sistema!")
-            opcion= int(input("Desea seguir? si/no: "))
+            print("¡Gracias por usar el sistema! Hasta pronto.")
             break
-        
+            
         else:
             print("Opción inválida. Por favor, elegí un número del 1 al 7.")
-  
+            continue
+        
+        # Preguntar si quiere seguir
+        while True:
+            seguir = input("¿Desea realizar otra acción? (si/no): ").strip().lower()
+            if seguir in ['si', 's', 'yes', 'y']:
+                break
+            elif seguir in ['no', 'n']:
+                print("¡Gracias por usar el sistema!")
+                exit()
+            else:
+                print("Por favor, responda 'si' o 'no'.")
+                
     except ValueError as e:
-        print(f"Error: Por favor, ingresá un número válido. ({e})")
-    
+        if "invalid literal for int()" in str(e):
+            print("Error: Por favor, ingresá un número válido.")
+        else:
+            print(f"Error: {e}")
+
     except Exception as e:
         print(f"Ocurrió un error inesperado: {e}")
