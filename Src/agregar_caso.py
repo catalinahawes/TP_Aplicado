@@ -8,8 +8,6 @@ from funcion_validacion import (
     validar_texto_obligatorio,
 )
 
-ARCHIVO = "informacion_usuarios_argentina_unico.csv"
-
 COLUMNAS = [
     "Nombre y Apellido",
     "Edad",
@@ -22,34 +20,71 @@ COLUMNAS = [
 ]
 
 
-def agregar_caso():
+def agregar_caso(archivo_activos):
+    """
+    Agrega un nuevo caso al archivo de casos activos.
+
+    Parameters
+    ----------
+    archivo_activos : str
+        Nombre o ruta del archivo CSV donde están guardados los casos activos.
+
+    Returns
+    -------
+    None
+        Guarda el nuevo caso en el archivo y muestra mensajes por consola.
+    """
     print("AGREGAR NUEVO CASO")
 
     try:
-        nombre = validar_nombre_apellido(input("Nombre y Apellido: ").strip())
-        edad = validar_entero_positivo(input("Edad: ").strip(), "Edad")
-        genero = validar_texto_obligatorio(input("Género: ").strip(), "Género")
-        peso = validar_decimal_positivo(input("Peso (kg): ").strip(), "Peso (kg)")
-        altura = validar_decimal_positivo(input("Altura (m): ").strip(), "Altura (m)")
-        rasgos = validar_texto_obligatorio(input("Rasgos Físicos: ").strip(), "Rasgos Físicos")
-        zona = validar_texto_obligatorio(input("Zona (Argentina): ").strip(), "Zona (Argentina)")
-        datos_extra = input("Datos Extra (opcional): ").strip()
+        nombre = input("Nombre y Apellido: ")
+        nombre = validar_nombre_apellido(nombre)
 
-    except ValueError as e:
-        print(f"Error en los datos ingresados: {e}")
+        edad = input("Edad: ")
+        edad = validar_entero_positivo(edad, "edad")
+
+        genero = input("Género: ")
+        genero = validar_texto_obligatorio(genero, "género")
+
+        peso = input("Peso (kg): ")
+        peso = validar_decimal_positivo(peso, "peso")
+
+        altura = input("Altura (m): ")
+        altura = validar_decimal_positivo(altura, "altura")
+
+        rasgos = input("Rasgos Físicos: ")
+        rasgos = validar_texto_obligatorio(rasgos, "rasgos físicos")
+
+        zona = input("Zona (Argentina): ")
+        zona = validar_texto_obligatorio(zona, "zona")
+
+        datos_extra = input("Datos Extra: ")
+        datos_extra = validar_texto_obligatorio(datos_extra, "datos extra")
+
+        nueva_fila = {
+            "Nombre y Apellido": nombre,
+            "Edad": edad,
+            "Género": genero,
+            "Peso (kg)": peso,
+            "Altura (m)": altura,
+            "Rasgos Físicos": rasgos,
+            "Zona (Argentina)": zona,
+            "Datos Extra": datos_extra,
+        }
+
+        if os.path.exists(archivo_activos):
+            df = pd.read_csv(archivo_activos)
+        else:
+            df = pd.DataFrame(columns=COLUMNAS)
+
+        df.loc[len(df)] = nueva_fila
+        df.to_csv(archivo_activos, index=False)
+
+        print("Caso agregado correctamente.")
+
+    except ValueError as error:
+        print("Error en los datos ingresados:", error)
         print("No se guardó el caso. Por favor, volvé a intentarlo.")
-        return
-    
-    nueva_fila = [nombre, edad, genero, peso, altura, rasgos, zona, datos_extra]
 
-    if os.path.exists(ARCHIVO):
-        df = pd.read_csv(ARCHIVO)
-    else:
-        df = pd.DataFrame(columns=COLUMNAS)
-
-    #Para agregar fila:
-    df.loc[len(df)] = nueva_fila
-
-    df.to_csv(ARCHIVO, index=False)
-
-    print("Caso agregado correctamente.")
+    except PermissionError:
+        print("Error: no se pudo guardar el archivo. Cerralo si está abierto.")
