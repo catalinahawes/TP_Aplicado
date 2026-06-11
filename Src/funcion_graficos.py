@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from funcion_validacion import validar_entero_positivo
+from Src.funcion_validacion import validar_entero_positivo
 def grafico_barras_zona(df):
     '''
     Genera un gráfico de barras con la cantidad de casos por zona.
