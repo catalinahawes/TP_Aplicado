@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 
-from funcion_validacion import (
+from Src.funcion_validacion import (
     validar_nombre_apellido,
     validar_entero_positivo,
     validar_decimal_positivo,

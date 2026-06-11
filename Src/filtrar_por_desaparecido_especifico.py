@@ -1,7 +1,7 @@
 import pandas as pd
 
 ARCHIVO = "Datos/informacion_usuarios_argentina_unico.csv"
-from funcion_validacion import validar_nombre_apellido
+from Src.funcion_validacion import validar_nombre_apellido
 
 
 def filtrar_participante(df, nombre_buscado):
