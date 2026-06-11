@@ -11,22 +11,26 @@ import os
 import pandas as pd
 
 #IMPORT DE LAS FUNCIONES
-import Funcion_general
-import modificar_caso_resuelto
-import agregar_caso
-import funcion_graficos
-import mostrar_resueltos
-import filtrar_por_desaparecido_especifico
+import Src.Funcion_general
+import Src.modificar_caso_resuelto
+import Src.agregar_caso
+import Src.funcion_graficos
+import Src.mostrar_resueltos
+import Src.filtrar_por_desaparecido_especifico
 
 #ARCHIVO CON INFO
-ruta= 'C:\\Users\\Sofia\\OneDrive\\Documentos\\GitHub\\TP_Aplicado\\Datos\\'
+ruta= 'Datos\\'
 archivo= 'informacion_usuarios_argentina_unicos.csv'
+
+completo= ruta + archivo
 
 df = pd.read_csv(os.path.join(ruta, archivo))
 
 #ARCHIVO CASOS RESUELTOS
-ruta_2= "C:\\Users\\Sofia\\OneDrive\\Documentos\\GitHub\\TP_Aplicado\\Datos\\"
+ruta_2= "Datos\\"
 archivo_casos_resueltos= 'Casos resueltos.csv'
+
+completo_2= ruta_2 + archivo_casos_resueltos
 
 df_2 = pd.read_csv(os.path.join(ruta_2, archivo_casos_resueltos))
 
@@ -46,27 +50,29 @@ opcion= int(input("Elegi una opcion: "))
 while opcion != 7:
     try: 
         if opcion == 1:
-            general= Funcion_general.mostrar_general(df)
+            general= Src.Funcion_general.mostrar_general(df)
         
         elif opcion == 2:
-            particular= filtrar_por_desaparecido_especifico.filtrar_participante(df)
-         
+            nombre= Src.filtrar_por_desaparecido_especifico.mostrar_caso_especifico(df)    
+             
+            particular= Src.filtrar_por_desaparecido_especifico.filtrar_participante(df, nombre)
+            
         elif opcion == 3:
-            caso_nuevo= agregar_caso.agregar_caso(df)
+            caso_nuevo= Src.agregar_caso.agregar_caso(df)
             
         elif opcion == 4:
-            estadisticas= funcion_graficos.menu_graficos(df)
+            estadisticas= Src.funcion_graficos.menu_graficos(df)
             
         elif opcion == 5:
-            resuelto= modificar_caso_resuelto.modificar_archivo_caso(df, df_2)
+            resuelto= Src.modificar_caso_resuelto.modificar_archivo_caso(completo, completo_2)
         
         elif opcion == 6:
-            casos_resueltos= mostrar_resueltos.mostrar_casos_resueltos(df_2)
+            casos_resueltos= Src.mostrar_resueltos.mostrar_casos_resueltos(df_2)
         
     except ValueError as e:
         print(e)
     
     
-    finally:
+    finally: 
         opcion= int(input("Elegi una opcion: "))
 
