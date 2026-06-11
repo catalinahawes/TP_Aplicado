@@ -27,10 +27,12 @@ def grafico_barras_zona(df):
             cantidades.append(zonas.count(zona))
     
     plt.figure()
-    plt.bar(x=zonas_unicas, height=cantidades, color="blue")
+    plt.bar(x=zonas_unicas, height=cantidades)
     plt.title("Casos por zona")
     plt.xlabel("Zona")
     plt.ylabel("Cantidad de casos")
+    plt.xticks(rotation=45)
+    plt.tight_layout()
     plt.show()
 
 
@@ -68,6 +70,7 @@ def grafico_torta_genero(df):
 
 
 
+
 def grafico_histograma_edad(df):
     '''
     Genera un histograma con la distribución de edades de los casos.
@@ -87,7 +90,7 @@ def grafico_histograma_edad(df):
     edades = df['Edad'].tolist()
     
     plt.figure()
-    plt.hist(edades, color="green")
+    plt.hist(edades)
     plt.title("Distribución de edades")
     plt.xlabel("Edad")
     plt.ylabel("Cantidad de casos")
@@ -118,7 +121,7 @@ def menu_graficos(df):
         try:
             opcion_str = input("Elegí una opción: ")
             opcion = validar_entero_positivo(opcion_str, "opción del menú")
-            
+
             if opcion == 1:
                 grafico_barras_zona(df)
             elif opcion == 2:
@@ -135,7 +138,7 @@ def menu_graficos(df):
                 break
             else:
                 print("Opción inválida. Elegí un número entre 1 y 5.")
-                
-        except ValueError as e:
-            print(f"Error de validación: {e}")
+
+        except ValueError as error:
+            print("Error de validación:", error)
             print("Por favor, intentá de nuevo con un número del 1 al 5.")
