@@ -35,7 +35,9 @@ def mostrar_caso_especifico(df):
    
     if len(resultado) > 0:
        print("Caso encontrado:")
-       print(resultado.to_string(index=False))
+       caso = resultado.iloc[0]   
+       for columna, valor in caso.items():
+           print(f"{columna:20} : {valor}")
     else:
        print("No se encontraron registros")
    

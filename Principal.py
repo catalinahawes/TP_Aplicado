@@ -20,27 +20,29 @@ from Src.filtrar_por_desaparecido_especifico import mostrar_caso_especifico
 
 
 ruta = 'Datos'
-archivo_activos = 'informacion_usuarios_argentina_unicos.cvs'
-archivo_resueltos = 'Casos resueltos.cvs'
+archivo_activos = 'informacion_usuarios_argentina_unicos.xlsx'
+archivo_resueltos = 'Casos resueltos.xlsx'
 
 completo_activos = os.path.join(ruta, archivo_activos)
 completo_resueltos = os.path.join(ruta, archivo_resueltos)
 
 
 try:
-    df = pd.read_csv(completo_activos, encoding='latin1')
+    df = pd.read_excel(completo_activos, header=2)
 except:
     df = pd.DataFrame()
 
 try:
-    df_resueltos = pd.read_csv(completo_resueltos, encoding='latin1')
+    df_resueltos = pd.read_excel(completo_resueltos, header=2)
 except:
     df_resueltos = pd.DataFrame()
 
 
 
 
-while True:
+
+seguir= 'si'
+while seguir == 'si':
     
     print("Elija una de las siguientes opciones:")
     print("1. Mostrar general (todos los casos activos)")
@@ -99,16 +101,6 @@ while True:
             print("Opción inválida. Por favor, elegí un número del 1 al 7.")
             continue
         
-        # Preguntar si quiere seguir
-        while True:
-            seguir = input("¿Desea realizar otra acción? (si/no): ").strip().lower()
-            if seguir in ['si', 's', 'yes', 'y']:
-                break
-            elif seguir in ['no', 'n']:
-                print("¡Gracias por usar el sistema!")
-                exit()
-            else:
-                print("Por favor, responda 'si' o 'no'.")
                 
     except ValueError as e:
         if "invalid literal for int()" in str(e):
@@ -117,4 +109,15 @@ while True:
             print(f"Error: {e}")
 
     except Exception as e:
-        print(f"Ocurrió un error inesperado: {e}")
+        print(f"Ocurrió un error inesperado: {e}")\
+            
+    
+    while seguir== 'si':
+        seguir = input("¿Desea realizar otra acción? (si/no): ").strip().lower()
+        if seguir in ['si', 's', 'yes', 'y']:
+            break
+        elif seguir in ['no', 'n']:
+            print("¡Gracias por usar el sistema!")
+            break          
+        else:
+            print("Por favor, responda 'si' o 'no'.")
