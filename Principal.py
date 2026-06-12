@@ -28,12 +28,12 @@ completo_resueltos = os.path.join(ruta, archivo_resueltos)
 
 
 try:
-    df = pd.read_excel(completo_activos, header=2)
+    df = pd.read_excel(completo_activos, header=0)
 except:
     df = pd.DataFrame()
 
 try:
-    df_resueltos = pd.read_excel(completo_resueltos, header=2)
+    df_resueltos = pd.read_excel(completo_resueltos, header=0)
 except:
     df_resueltos = pd.DataFrame()
 
