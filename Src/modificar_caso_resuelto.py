@@ -52,11 +52,11 @@ def modificar_archivo_caso(archivo_activos, archivo_resueltos):
         indice = caso.index[0]
         df_sin_caso = df.drop(indice)
 
-        df_resueltos = pd.read_csv(archivo_resueltos, encoding="latin1")
+        df_resueltos = pd.read_excel(archivo_resueltos)
         df_resueltos = pd.concat([df_resueltos, caso], ignore_index=True)
 
         df_sin_caso.to_excel(archivo_activos, index=False)
-        df_resueltos.to_csv(archivo_resueltos, index=False, encoding="latin1")
+        df_resueltos.to_csv(archivo_resueltos, index=False)
 
         print("El caso fue marcado como resuelto correctamente.")
         print("Se eliminó del archivo de casos activos.")
