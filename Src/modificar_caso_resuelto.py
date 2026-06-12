@@ -22,13 +22,12 @@ def modificar_archivo_caso(archivo_activos, archivo_resueltos):
         Nombre o ruta del archivo Excel donde están guardados los casos activos.
 
     archivo_resueltos : str
-        Nombre o ruta del archivo Excel donde están guardados los casos resueltos.
+        Nombre o ruta del archivo CSV donde están guardados los casos resueltos.
 
     Returns
     -------
     None
-        La función no devuelve ningún valor. Modifica los archivos de Excel
-        y muestra mensajes por consola.
+        La función no devuelve ningún valor. Modifica los archivos y muestra mensajes por consola.
     """
 
     try:
@@ -53,11 +52,11 @@ def modificar_archivo_caso(archivo_activos, archivo_resueltos):
         indice = caso.index[0]
         df_sin_caso = df.drop(indice)
 
-        df_excel_resueltos = pd.read_excel(archivo_resueltos)
-        df_excel_resueltos = pd.concat([df_excel_resueltos, caso], ignore_index=True)
+        df_resueltos = pd.read_csv(archivo_resueltos, encoding="latin1")
+        df_resueltos = pd.concat([df_resueltos, caso], ignore_index=True)
 
         df_sin_caso.to_excel(archivo_activos, index=False)
-        df_excel_resueltos.to_excel(archivo_resueltos, index=False)
+        df_resueltos.to_csv(archivo_resueltos, index=False, encoding="latin1")
 
         print("El caso fue marcado como resuelto correctamente.")
         print("Se eliminó del archivo de casos activos.")
@@ -71,7 +70,7 @@ def modificar_archivo_caso(archivo_activos, archivo_resueltos):
 
     except PermissionError:
         print("Error: no se pudo guardar el archivo.")
-        print("Cerrá el archivo de Excel si lo tenés abierto.")
+        print("Cerrá el archivo si lo tenés abierto.")
 
     except KeyError as error:
         print("Error:", error)
