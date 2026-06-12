@@ -19,7 +19,7 @@ def modificar_archivo_caso(archivo_activos, archivo_resueltos):
     Parameters
     ----------
     archivo_activos : str
-        Nombre o ruta del archivo CSV donde están guardados los casos activos.
+        Nombre o ruta del archivo Excel donde están guardados los casos activos.
 
     archivo_resueltos : str
         Nombre o ruta del archivo CSV donde están guardados los casos resueltos.
@@ -27,12 +27,11 @@ def modificar_archivo_caso(archivo_activos, archivo_resueltos):
     Returns
     -------
     None
-        La función no devuelve ningún valor. Modifica los archivos CSV y muestra
-        mensajes por consola.
+        La función no devuelve ningún valor. Modifica los archivos y muestra mensajes por consola.
     """
 
     try:
-        df = pd.read_csv(archivo_activos)
+        df = pd.read_excel(archivo_activos)
 
         if len(df) == 0:
             raise ValueError("El archivo de casos activos está vacío.")
@@ -51,14 +50,13 @@ def modificar_archivo_caso(archivo_activos, archivo_resueltos):
             raise ValueError("No se encontró una denuncia con ese número de caso.")
 
         indice = caso.index[0]
-
         df_sin_caso = df.drop(indice)
 
-        df_resueltos = pd.read_csv(archivo_resueltos)
+        df_resueltos = pd.read_csv(archivo_resueltos, encoding="latin1")
         df_resueltos = pd.concat([df_resueltos, caso], ignore_index=True)
 
-        df_sin_caso.to_csv(archivo_activos, index=False)
-        df_resueltos.to_csv(archivo_resueltos, index=False)
+        df_sin_caso.to_excel(archivo_activos, index=False)
+        df_resueltos.to_csv(archivo_resueltos, index=False, encoding="latin1")
 
         print("El caso fue marcado como resuelto correctamente.")
         print("Se eliminó del archivo de casos activos.")
