@@ -19,20 +19,20 @@ def modificar_archivo_caso(archivo_activos, archivo_resueltos):
     Parameters
     ----------
     archivo_activos : str
-        Nombre o ruta del archivo Excel donde están guardados los casos activos.
+        Nombre o ruta del archivo CSV donde están guardados los casos activos.
 
     archivo_resueltos : str
-        Nombre o ruta del archivo Excel donde están guardados los casos resueltos.
+        Nombre o ruta del archivo CSV donde están guardados los casos resueltos.
 
     Returns
     -------
     None
-        La función no devuelve ningún valor. Modifica los archivos de Excel
-        y muestra mensajes por consola.
+        La función no devuelve ningún valor. Modifica los archivos CSV y muestra
+        mensajes por consola.
     """
 
     try:
-        df = pd.read_excel(archivo_activos)
+        df = pd.read_csv(archivo_activos)
 
         if len(df) == 0:
             raise ValueError("El archivo de casos activos está vacío.")
@@ -51,13 +51,14 @@ def modificar_archivo_caso(archivo_activos, archivo_resueltos):
             raise ValueError("No se encontró una denuncia con ese número de caso.")
 
         indice = caso.index[0]
+
         df_sin_caso = df.drop(indice)
 
-        df_excel_resueltos = pd.read_excel(archivo_resueltos)
-        df_excel_resueltos = pd.concat([df_excel_resueltos, caso], ignore_index=True)
+        df_resueltos = pd.read_csv(archivo_resueltos)
+        df_resueltos = pd.concat([df_resueltos, caso], ignore_index=True)
 
-        df_sin_caso.to_excel(archivo_activos, index=False)
-        df_excel_resueltos.to_excel(archivo_resueltos, index=False)
+        df_sin_caso.to_csv(archivo_activos, index=False)
+        df_resueltos.to_csv(archivo_resueltos, index=False)
 
         print("El caso fue marcado como resuelto correctamente.")
         print("Se eliminó del archivo de casos activos.")
@@ -71,7 +72,7 @@ def modificar_archivo_caso(archivo_activos, archivo_resueltos):
 
     except PermissionError:
         print("Error: no se pudo guardar el archivo.")
-        print("Cerrá el archivo de Excel si lo tenés abierto.")
+        print("Cerrá el archivo si lo tenés abierto.")
 
     except KeyError as error:
         print("Error:", error)
