@@ -20,8 +20,8 @@ from Src.filtrar_por_desaparecido_especifico import mostrar_caso_especifico
 
 
 ruta = 'Datos'
-archivo_activos = 'informacion_usuarios_argentina_unicos.xlsx'
-archivo_resueltos = 'Casos resueltos.xlsx'
+archivo_activos = 'informacion_usuarioss.csv'
+archivo_resueltos = 'Casos resueltos.csv'
 
 completo_activos = os.path.join(ruta, archivo_activos)
 completo_resueltos = os.path.join(ruta, archivo_resueltos)
