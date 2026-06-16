@@ -21,7 +21,7 @@ from Src.filtrar_por_desaparecido_especifico import mostrar_caso_especifico
 
 ruta = 'Datos'
 archivo_activos = "informacion_usuarios.xlsx"
-archivo_resueltos = 'Casos resueltos.csv'
+archivo_resueltos = 'Casos resueltos.xlsx'
 
 completo_activos = os.path.join(ruta, archivo_activos)
 completo_resueltos = os.path.join(ruta, archivo_resueltos)
@@ -40,9 +40,7 @@ except:
 
 
 
-
-seguir= 'si'
-while seguir == 'si':
+while True:
     
     print("Elija una de las siguientes opciones:")
     print("1. Mostrar general (todos los casos activos)")
@@ -109,15 +107,21 @@ while seguir == 'si':
             print(f"Error: {e}")
 
     except Exception as e:
-        print(f"Ocurrió un error inesperado: {e}")\
+        print(f"Ocurrió un error inesperado: {e}")
             
-    
-    while seguir== 'si':
+    seguir = 'si'
+    while seguir == 'si':
         seguir = input("¿Desea realizar otra acción? (si/no): ").strip().lower()
-        if seguir in ['si', 's', 'yes', 'y']:
+        
+        if seguir == 'si':
             break
         elif seguir in ['no', 'n']:
             print("¡Gracias por usar el sistema!")
-            break          
+            break
         else:
             print("Por favor, responda 'si' o 'no'.")
+            seguir = input("¿Desea realizar otra acción? (si/no): ").strip().lower()
+            
+            
+    if seguir in ['no', 'n']:
+        break
