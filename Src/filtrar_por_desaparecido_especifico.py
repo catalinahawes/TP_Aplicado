@@ -23,7 +23,7 @@ def filtrar_participante(df, nombre_buscado):
     if not nombre_buscado:
         return pd.DataFrame()
 
-    coincidencias = df[df['Nombre y Apellido'] == nombre_buscado]
+    coincidencias = df[df['Nombre y Apellido'] == nombre_buscado.strip()]
     return coincidencias
 
 def mostrar_caso_especifico(df):

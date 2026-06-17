@@ -38,7 +38,7 @@ def agregar_caso(archivo_activos):
 
     try:
         nombre = input("Nombre y Apellido: ")
-        nombre = validar_nombre_apellido(nombre)
+        nombre = validar_nombre_apellido(nombre).strip()
 
         edad = input("Edad: ")
         edad = validar_entero_positivo(edad, "edad")
@@ -60,8 +60,20 @@ def agregar_caso(archivo_activos):
 
         datos_extra = input("Datos Extra: ")
         datos_extra = validar_texto_obligatorio(datos_extra, "datos extra")
+        
+        
+        if os.path.exists(archivo_activos):
+            df = pd.read_excel(archivo_activos, header=0)
+            if len(df) > 0:
+                proximo_numero = df["N° Caso"].max() + 1
+            else:
+                proximo_numero = 1
+        else:
+            df = pd.DataFrame(columns=COLUMNAS)
+            proximo_numero = 1
 
         nueva_fila = {
+            "N° Caso": proximo_numero,
             "Nombre y Apellido": nombre,
             "Edad": edad,
             "Género": genero,
