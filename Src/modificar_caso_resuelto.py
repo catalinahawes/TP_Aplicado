@@ -4,78 +4,92 @@ Created on Wed Jun 10 08:36:08 2026
 
 @author: mimib
 """
-
+import os
 import pandas as pd
 from Src.funcion_validacion import validar_entero_positivo
 
 
 def modificar_archivo_caso(archivo_activos, archivo_resueltos):
     """
-    Busca una denuncia activa por número de caso.
-
-    Si encuentra el caso, lo elimina del archivo de denuncias activas
-    y lo agrega al archivo de denuncias resueltas.
+    Permite marcar uno o varios casos como resueltos de forma consecutiva.
+    
+    Busca un caso activo por su número, lo elimina del archivo de casos activos
+    y lo agrega al archivo de casos resueltos. Al finalizar, pregunta al usuario
+    si desea seguir modificando más casos.
 
     Parameters
     ----------
     archivo_activos : str
-        Nombre o ruta del archivo Excel donde están guardados los casos activos.
-
+        Ruta del archivo Excel que contiene los casos activos.
     archivo_resueltos : str
-        Nombre o ruta del archivo Excel donde están guardados los casos resueltos.
+        Ruta del archivo Excel que contiene los casos ya resueltos.
 
     Returns
     -------
     None
-        La función no devuelve ningún valor. Modifica los archivos de Excel
-        y muestra mensajes por consola.
+        La función no devuelve ningún valor. Modifica ambos archivos Excel
+        y muestra mensajes informativos por consola.
     """
 
-    try:
-        df = pd.read_excel(archivo_activos)
+    while True:   
+        try:
+            df = pd.read_excel(archivo_activos, header=0)
 
-        if len(df) == 0:
-            raise ValueError("El archivo de casos activos está vacío.")
+            if len(df) == 0:
+                print("El archivo de casos activos está vacío.")
+                return
 
-        if "N° Caso" not in df.columns:
-            raise KeyError("No existe la columna 'N° Caso' en el archivo de casos activos.")
+            if "N° Caso" not in df.columns:
+                print("No existe la columna 'N° Caso' en el archivo.")
+                return
 
-        print("Ingrese el número del caso que desea marcar como resuelto.")
+            print("\nIngrese el número del caso que desea marcar como resuelto.")
+            numero_caso = input("Número de caso: ")
+            numero_caso = validar_entero_positivo(numero_caso, "número de caso")
 
-        numero_caso = input("Número de caso: ")
-        numero_caso = validar_entero_positivo(numero_caso, "número de caso")
+            caso = df[df["N° Caso"] == numero_caso]
 
-        caso = df[df["N° Caso"] == numero_caso]
+            if len(caso) == 0:
+                print("No se encontró un caso con ese número de caso.")
+                continue
 
-        if len(caso) == 0:
-            raise ValueError("No se encontró una denuncia con ese número de caso.")
+           
+            df_sin_caso = df.drop(caso.index[0])
 
-        indice = caso.index[0]
-        df_sin_caso = df.drop(indice)
+            
+            if os.path.exists(archivo_resueltos):
+                df_resueltos = pd.read_excel(archivo_resueltos, header=0)
+            else:
+                df_resueltos = pd.DataFrame(columns=df.columns)
 
-        df_excel_resueltos = pd.read_excel(archivo_resueltos)
-        df_excel_resueltos = pd.concat([df_excel_resueltos, caso], ignore_index=True)
+            df_resueltos = pd.concat([df_resueltos, caso], ignore_index=True)
 
-        df_sin_caso.to_excel(archivo_activos, index=False)
-        df_excel_resueltos.to_excel(archivo_resueltos, index=False)
+            
+            df_sin_caso.to_excel(archivo_activos, index=False)
+            df_resueltos.to_excel(archivo_resueltos, index=False)
 
-        print("El caso fue marcado como resuelto correctamente.")
-        print("Se eliminó del archivo de casos activos.")
-        print("Se agregó al archivo de casos resueltos.")
+            print("El caso fue marcado como resuelto correctamente.")
+            print("Se eliminó del archivo de casos activos.")
+            print("Se agregó al archivo de casos resueltos.")
 
-    except FileNotFoundError:
-        print("Error: no se encontró alguno de los archivos.")
+        except FileNotFoundError:
+            print("Error: No se encontró alguno de los archivos.")
+            return
+        except PermissionError:
+            print("Error: No se pudo guardar el archivo. Cerralo si está abierto en Excel.")
+            return
+        except Exception as error:
+            print("Ocurrió un error inesperado:", error)
+            return
 
-    except ValueError as error:
-        print("Error:", error)
-
-    except PermissionError:
-        print("Error: no se pudo guardar el archivo.")
-        print("Cerrá el archivo de Excel si lo tenés abierto.")
-
-    except KeyError as error:
-        print("Error:", error)
-
-    except Exception as error:
-        print("Ocurrió un error inesperado.")
-        print(error)
+        
+        while True:
+            continuar = input("\n¿Desea seguir modificando más casos? (si/no): ").strip().lower()
+            
+            if continuar in ['si', 's', 'yes', 'y']:
+                break          
+            elif continuar in ['no', 'n']:
+                print("Volviendo al menú principal...")
+                return         
+            else:
+                print("Por favor, responda 'si' o 'no'.")
