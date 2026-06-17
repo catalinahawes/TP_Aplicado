@@ -18,8 +18,8 @@ def mostrar_casos_resueltos(archivo_2):
         
     '''
     if archivo_2.empty:
-        raise ValueError("[ERROR CRÍTICO] El archivo esta vacio")
-    
+        print("No hay casos resueltos todavía.")  
+        return
    
     for indice, fila in archivo_2.iterrows():
         print(f"--- Fila {indice} ---")

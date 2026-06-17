@@ -65,9 +65,9 @@ while True:
         elif opcion == 3:
             print("Agregar nuevo caso")
             agregar_caso(completo_activos)
-            # Recargamos después de agregar
+            
             try:
-                df = pd.read_excel(completo_activos, encoding='latin1')
+                df = pd.read_excel(completo_activos, header=0)
             except:
                 df = pd.DataFrame()
             
@@ -79,11 +79,11 @@ while True:
             print("Marcar caso como resuelto")
             modificar_archivo_caso(completo_activos, completo_resueltos)
             try:
-                df = pd.read_excel(completo_activos, encoding='latin1')
+                df = pd.read_excel(completo_activos, header=0)
             except:
                 df = pd.DataFrame()
             try:
-                df_resueltos = pd.read_excel(completo_resueltos, encoding='latin1')
+                df_resueltos = pd.read_excel(completo_resueltos, header=0)
             except:
                 df_resueltos = pd.DataFrame()
             
