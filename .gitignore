@@ -12,3 +12,4 @@ Src/__pycache__/agregar_caso.cpython-311.pyc
 Src/__pycache__/filtrar_por_desaparecido_especifico.cpython-311.pyc
 *.pyc
 Src/__pycache__/funcion_graficos.cpython-311.pyc
+*.pyc
