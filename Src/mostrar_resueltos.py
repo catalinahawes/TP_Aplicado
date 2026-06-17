@@ -5,7 +5,9 @@ Created on Wed Jun 10 15:24:17 2026
 
 @author: catalinahawes
 """
+import pandas as pd
 
+from IPython.display import display
 
 def mostrar_casos_resueltos(archivo_2):
     '''
@@ -21,5 +23,7 @@ def mostrar_casos_resueltos(archivo_2):
     if archivo_2.empty:
         raise ValueError("[ERROR CRÍTICO] El archivo esta vacio")
     
-    print(archivo_2.head())
+    #print(archivo_2.head())
     
+    with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+        display(archivo_2)
