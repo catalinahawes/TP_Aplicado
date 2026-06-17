@@ -73,7 +73,7 @@ def agregar_caso(archivo_activos):
         }
 
         if os.path.exists(archivo_activos):
-            df = pd.read_csv(archivo_activos)
+            df = pd.read_excel(archivo_activos)
         else:
             df = pd.DataFrame(columns=COLUMNAS)
 
