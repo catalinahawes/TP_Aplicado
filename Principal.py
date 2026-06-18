@@ -19,30 +19,42 @@ from Src.mostrar_resueltos import mostrar_casos_resueltos
 from Src.filtrar_por_desaparecido_especifico import mostrar_caso_especifico
 
 
-ruta = 'Datos'
+ruta_datos = 'Datos'
 archivo_activos = "informacion_usuarios.xlsx"
 archivo_resueltos = 'Casos resueltos.xlsx'
 
-completo_activos = os.path.join(ruta, archivo_activos)
-completo_resueltos = os.path.join(ruta, archivo_resueltos)
+ruta_activos = os.path.join(ruta_datos, archivo_activos)
+ruta_resueltos = os.path.join(ruta_datos, archivo_resueltos)
 
-
-try:
-    df = pd.read_excel(completo_activos, header=0)
-except:
-    df = pd.DataFrame()
-
-try:
-    df_resueltos = pd.read_excel(completo_resueltos, header=0)
-except:
-    df_resueltos = pd.DataFrame()
-
-
-
-
-while True:
+def cargar_activos():
+    """Carga los archivos Excel de casos activos"""
     
+    try:
+        df_activos = pd.read_excel(ruta_activos, header=0)
+        print("Casos activos cargados correctamente")
+        return df_activos
+    except FileNotFoundError:
+        raise FileNotFoundError(f"No se encontró el archivo de casos activos: {ruta_activos}. Creá el archivo o verificá la ruta antes de ejecutar.")
+        
+    except Exception as e:
+        raise Exception(f"Error al leer el archivo de casos activos: {e}")
+    
+def cargar_resueltos():
+    try:
+        df_resueltos = pd.read_excel(ruta_resueltos, header=0)
+        print("Casos resueltos cargados correctamente")
+        return df_resueltos
+    except FileNotFoundError:
+        print("Archivo de casos resueltos no encontrado. Se creará uno nuevo cuando marques un caso como resuelto.")
+        return pd.DataFrame()
+    except Exception as e:
+        raise Exception(f"Error al leer el archivo de casos resueltos: {e}")
+
+   
+
+def mostrar_menu():
     print("Elija una de las siguientes opciones:")
+    print("="*55)
     print("1. Mostrar general (todos los casos activos)")
     print("2. Mostrar info con filtros (caso específico)")
     print("3. Agregar reporte")
@@ -50,78 +62,75 @@ while True:
     print("5. Modificar estado del caso (marcar como resuelto)")
     print("6. Mostrar casos ya resueltos")
     print("7. Salir")
-    
-    try:
-        opcion = int(input("Elegí una opción (1-7): "))
-        
-        if opcion == 1:
-            print("Mostrando todos los casos activos")
-            mostrar_general(df)
-            
-        elif opcion == 2:
-            print("Buscar caso específico")
-            mostrar_caso_especifico(df)
-            
-        elif opcion == 3:
-            print("Agregar nuevo caso")
-            agregar_caso(completo_activos)
-            
-            try:
-                df = pd.read_excel(completo_activos, header=0)
-            except:
-                df = pd.DataFrame()
-            
-        elif opcion == 4:
-            print("Estadísticas y Gráficos")
-            menu_graficos(df)
-            
-        elif opcion == 5:
-            print("Marcar caso como resuelto")
-            modificar_archivo_caso(completo_activos, completo_resueltos)
-            try:
-                df = pd.read_excel(completo_activos, header=0)
-            except:
-                df = pd.DataFrame()
-            try:
-                df_resueltos = pd.read_excel(completo_resueltos, header=0)
-            except:
-                df_resueltos = pd.DataFrame()
-            
-        elif opcion == 6:
-            print("Mostrando casos ya resueltos")
-            mostrar_casos_resueltos(df_resueltos)
-            
-        elif opcion == 7:
-            print("¡Gracias por usar el sistema! Hasta pronto.")
-            break
-            
-        else:
-            print("Opción inválida. Por favor, elegí un número del 1 al 7.")
-            continue
-        
-                
-    except ValueError as e:
-        if "invalid literal for int()" in str(e):
-            print("Error: Por favor, ingresá un número válido.")
-        else:
-            print(f"Error: {e}")
+    print("="*55)
 
-    except Exception as e:
-        print(f"Ocurrió un error inesperado: {e}")
+def main():
+    df_activos = cargar_activos()
+    df_resueltos = cargar_resueltos()
+    while True:
+        mostrar_menu()
+        try:
+            opcion = int(input("Elegí una opción (1-7): "))
             
-    seguir = 'si'
-    while seguir == 'si':
-        seguir = input("¿Desea realizar otra acción? (si/no): ").strip().lower()
-        
-        if seguir == 'si':
-            break
-        elif seguir in ['no', 'n']:
-            print("¡Gracias por usar el sistema!")
-            break
-        else:
-            print("Por favor, responda 'si' o 'no'.")
-            seguir = input("¿Desea realizar otra acción? (si/no): ").strip().lower()
+            if opcion == 1:
+                mostrar_general(df_activos)
+                
+            elif opcion == 2:
+                mostrar_caso_especifico(df_activos)
+                
+            elif opcion == 3:
+                agregar_caso(ruta_activos)
+                df_activos = cargar_activos()           
+                
+            elif opcion == 4:
+                menu_graficos(df_activos)
+                
+            elif opcion == 5:
+                modificar_archivo_caso(ruta_activos, ruta_resueltos)
+                df_activos = cargar_activos()           
+                df_resueltos = cargar_resueltos()      
+                
+            elif opcion == 6:
+                mostrar_casos_resueltos(df_resueltos)
+                
+            elif opcion == 7:
+                print("¡Gracias por usar el sistema! Hasta pronto.")
+                break
+                
+            else:
+                print("Opción inválida. Por favor, elegí un número del 1 al 7.")
+                continue
             
+                    
+        except ValueError as e:
+            if "invalid literal for int()" in str(e):
+                print("Error: Por favor, ingresá un número válido.")
+            else:
+                print(f"Error: {e}")
+    
+        except Exception as e:
+            print(f"Ocurrió un error inesperado: {e}")
             
-    if seguir in ['no', 'n']:
-        break
+        while True:
+            seguir = input("¿Querés hacer otra acción? (si/no): ").strip().lower()
+            
+            if seguir in 'si':
+                break
+            elif seguir in 'no':
+                print("¡Gracias por usar el sistema!")
+                return
+            else:
+                print("Respuesta inválida. Escribí 'si' o 'no'.")
+                
+main()
+
+
+
+
+
+
+
+
+
+
+
