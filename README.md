@@ -66,10 +66,13 @@ El programa recibe un excel que contiene los siguientes datos:
 
 6. Estructura del Repositorio
 
-Estructura del Repositorio
+## Estructura del Repositorio
+
+```text
+Sistema-Gestion-Casos-Desaparecidos/
 ├── Datos/
-│   ├── informacion_usuarios.xlsx
-│   └── Casos resueltos.xlsx
+│   ├── informacion_usuarios.xlsx          # Casos activos
+│   └── Casos resueltos.xlsx               # Casos concluidos
 ├── Src/
 │   ├── Funcion_general.py
 │   ├── modificar_caso_resuelto.py
@@ -80,11 +83,11 @@ Estructura del Repositorio
 │   └── funcion_validacion.py
 ├── Principal.py
 ├── Diseño/
-│   └── [Diagramas de flujo y documentación]
+│   └── Diagramas de flujo y documentación
 ├── requirements.txt
 ├── README.md
-└── app.pys Funciones Principales
-
+└── app.py
+```
 1) Visualización del Registro General
 - Función: lectura completa del archivo.
 - Descripción: el sistema accede al excel principal que almacena la totalidad de los registros históricos, procesa las líneas de datos y las despliega de forma ordenada en la consola para permitir una auditoría visual de todos los casos vigentes.
