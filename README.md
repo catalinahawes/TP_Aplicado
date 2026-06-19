@@ -172,5 +172,6 @@ Como resultado de su ejecución, el programa logra procesar la base de datos de 
 
 **Autores:** Miranda Berazategui • Catalina Hawes • Sofia Jalil Bestard • Guadalupe Merke • Matilde Nuñez
 
-*Universidad de San Andrés – Programación Otoño 2026*explicaciones más claras, fluidas y técnicamente precisas.
+*Universidad de San Andrés – Programación Otoño 2026
+
 
