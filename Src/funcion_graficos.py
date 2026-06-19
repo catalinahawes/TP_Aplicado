@@ -24,15 +24,14 @@ def grafico_barras_zona(df):
         print("No se encontró la columna 'Zona (Argentina)'.")
         return
 
-    # === Parte simple de limpieza ===
+
     zonas_originales = df['Zona (Argentina)'].tolist()
     
     zonas_limpias = []
     for z in zonas_originales:
-        if z == z and z is not None:   # Esto elimina los valores vacíos (NaN)
-            zonas_limpias.append(str(z))   # Lo convertimos a texto
+        if z == z and z is not None:   
+            zonas_limpias.append(str(z))   
 
-    # === Conteo manual (como lo tenías antes) ===
     zonas_unicas = []
     cantidades = []
 
@@ -41,7 +40,7 @@ def grafico_barras_zona(df):
             zonas_unicas.append(zona)
             cantidades.append(zonas_limpias.count(zona))
 
-    # === Gráfico básico ===
+    
     plt.figure()
     plt.bar(x=zonas_unicas, height=cantidades)
     plt.title("Casos por zona")
