@@ -31,7 +31,6 @@ def cargar_activos():
     
     try:
         df_activos = pd.read_excel(ruta_activos, header=0)
-        print("Casos activos cargados correctamente")
         return df_activos
     except FileNotFoundError:
         raise FileNotFoundError(f"No se encontró el archivo de casos activos: {ruta_activos}. Creá el archivo o verificá la ruta antes de ejecutar.")
@@ -42,7 +41,6 @@ def cargar_activos():
 def cargar_resueltos():
     try:
         df_resueltos = pd.read_excel(ruta_resueltos, header=0)
-        print("Casos resueltos cargados correctamente")
         return df_resueltos
     except FileNotFoundError:
         print("Archivo de casos resueltos no encontrado. Se creará uno nuevo cuando marques un caso como resuelto.")
@@ -114,9 +112,9 @@ def main():
         while True:
             seguir = input("¿Querés hacer otra acción? (si/no): ").strip().lower()
             
-            if seguir in 'si':
+            if seguir in ['si', 's', 'yes', 'y']:
                 break
-            elif seguir in 'no':
+            elif seguir in ['no', 'n']:
                 print("¡Gracias por usar el sistema!")
                 return
             else:
