@@ -27,7 +27,25 @@ ruta_activos = os.path.join(ruta_datos, archivo_activos)
 ruta_resueltos = os.path.join(ruta_datos, archivo_resueltos)
 
 def cargar_activos():
-    """Carga los archivos Excel de casos activos"""
+    """
+    Carga el archivo Excel que contiene los casos activos.
+
+    Intenta leer el archivo ubicado en la ruta definida. Si el archivo no existe,
+    lanza una excepción clara indicando que debe crearse o verificarse la ruta.
+    Cualquier otro error durante la lectura también es propagado.
+
+    Returns
+    -------
+    pandas.DataFrame
+        DataFrame con los casos activos cargados desde el archivo Excel.
+
+    Raises
+    ------
+    FileNotFoundError
+        Si el archivo de casos activos no se encuentra en la ruta especificada.
+    Exception
+        Para cualquier otro error ocurrido durante la lectura del archivo.
+    """
     
     try:
         df_activos = pd.read_excel(ruta_activos, header=0)
@@ -39,6 +57,24 @@ def cargar_activos():
         raise Exception(f"Error al leer el archivo de casos activos: {e}")
     
 def cargar_resueltos():
+    """
+    Carga el archivo Excel que contiene los casos ya resueltos.
+
+    Si el archivo no existe, muestra un mensaje informativo y devuelve un 
+    DataFrame vacío (para que el programa pueda seguir funcionando y crear 
+    el archivo cuando se marque el primer caso como resuelto).
+
+    Returns
+    -------
+    pandas.DataFrame
+        DataFrame con los casos resueltos. Si el archivo no existe, 
+        se devuelve un DataFrame vacío.
+
+    Raises
+    ------
+    Exception
+        Si ocurre un error distinto a que el archivo no exista.
+    """
     try:
         df_resueltos = pd.read_excel(ruta_resueltos, header=0)
         return df_resueltos
@@ -51,6 +87,17 @@ def cargar_resueltos():
    
 
 def mostrar_menu():
+    """
+    Muestra el menú principal de opciones del sistema.
+
+    Imprime en pantalla las 7 opciones disponibles para que el usuario 
+    pueda seleccionar qué acción desea realizar.
+
+    Returns
+    -------
+    None
+        La función solo imprime información por consola.
+    """
     print("Elija una de las siguientes opciones:")
     print("="*55)
     print("1. Mostrar general (todos los casos activos)")
@@ -63,6 +110,20 @@ def mostrar_menu():
     print("="*55)
 
 def main():
+    """
+    Función principal del programa.
+
+    Coordina todo el flujo del sistema de gestión de casos de desaparecidos.
+    Carga los archivos de casos activos y resueltos, muestra el menú al usuario,
+    ejecuta la opción seleccionada y maneja el flujo de continuar o salir del programa.
+
+    Esta función actúa como el punto de entrada principal de la aplicación.
+
+    Returns
+    -------
+    None
+        La función gestiona todo el ciclo de vida del programa hasta que el usuario decide salir.
+    """
     df_activos = cargar_activos()
     df_resueltos = cargar_resueltos()
     while True:

@@ -7,16 +7,24 @@ Created on Wed Jun 10 15:24:17 2026
 """
 
 def mostrar_casos_resueltos(archivo_2):
-    '''
-    Lee un archivo CSV de los casos ya resuektos y muestra toda la tabla
-    
-    Parametros:
-        archivo_2 (DataFrame): datos cargados desde un CSV.
-        
-    Errores:
-        ValueError: si el archivo se encuentra vacio
-        
-    '''
+    """
+    Muestra todos los casos que ya fueron marcados como resueltos.
+
+    Recorre el DataFrame de casos resueltos y muestra la información completa 
+    de cada caso de forma ordenada. Si no hay casos resueltos, informa al usuario 
+    y finaliza la ejecución de la función sin generar errores.
+
+    Parameters
+    ----------
+    archivo_2 : pandas.DataFrame
+        DataFrame que contiene los casos ya resueltos. Debe tener las mismas 
+        columnas que el archivo de casos activos.
+
+    Returns
+    -------
+    None
+        La función no devuelve ningún valor. Muestra la información por consola.
+    """
     if archivo_2.empty:
         print("No hay casos resueltos todavía.")  
         return
