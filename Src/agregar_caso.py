@@ -39,13 +39,15 @@ def agregar_caso(archivo_activos):
     try:
         nombre = input("Nombre y Apellido: ")
         nombre = validar_nombre_apellido(nombre).strip()
-
+        if nombre.isdigit():
+            raise ValueError("El género no puede ser un número. Ingresá un texto (ej: Masculino, Femenino, No Binario).")
         edad = input("Edad: ")
         edad = validar_entero_positivo(edad, "edad")
 
         genero = input("Género: ")
         genero = validar_texto_obligatorio(genero, "género")
-
+        if genero.isdigit():
+            raise ValueError("El género no puede ser un número. Ingresá un texto (ej: Masculino, Femenino, No Binario).")
         peso = input("Peso (kg): ")
         peso = validar_decimal_positivo(peso, "peso")
 
